@@ -4,6 +4,8 @@ import com.comparethemarket.creditcard.exception.InvalidCardTypeException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.IntStream;
@@ -27,7 +29,7 @@ public class CreditCardValidator {
         Visa
     }
 
-    protected CARD_TYPE isCreditCardTypeValid(String cardNumber) {
+    protected CARD_TYPE creditCardTypeCheck(String cardNumber) {
 
         if (!StringUtils.isNumeric(cardNumber) || cardNumber.length() < 13 || cardNumber.length() > 16) {
             LOG.debug("Credit card '{}' is not valid", cardNumber);
@@ -58,4 +60,16 @@ public class CreditCardValidator {
                 .sum() % 10 == 0;
     }
 
+    public ResponseEntity checkCreditCardValidity(String cardNumber) {
+
+        CARD_TYPE cardType = creditCardTypeCheck(cardNumber);
+
+        if (isCardValid(cardNumber)) {
+            LOG.debug("Card {} is a valid card of type {}", cardNumber, cardType);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } else {
+            LOG.warn("Card {} is NOT a valid card of type {}", cardNumber, cardType);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
 }

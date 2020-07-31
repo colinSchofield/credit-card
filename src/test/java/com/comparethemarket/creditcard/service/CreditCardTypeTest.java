@@ -23,7 +23,7 @@ class CreditCardTypeTest {
         String creditCardNumber = null;
         // Expect InvalidCardTypeException
         assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+            creditCardValidator.creditCardTypeCheck(creditCardNumber);
         });
     }
 
@@ -33,7 +33,7 @@ class CreditCardTypeTest {
         String creditCardNumber = "123456789012345678";
         // Expect InvalidCardTypeException
         assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+            creditCardValidator.creditCardTypeCheck(creditCardNumber);
         });
     }
 
@@ -43,7 +43,7 @@ class CreditCardTypeTest {
         String creditCardNumber = "1234";
         // Expect InvalidCardTypeException
         assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+            creditCardValidator.creditCardTypeCheck(creditCardNumber);
         });
     }
 
@@ -52,7 +52,7 @@ class CreditCardTypeTest {
         // Given
         String creditCardNumber = "341234567890123";
         // When
-        CARD_TYPE cardType = creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
         assertEquals(CARD_TYPE.AMEX, cardType, "Card is of type AMEX");
     }
@@ -62,7 +62,7 @@ class CreditCardTypeTest {
         // Given
         String creditCardNumber = "371234567890123";
         // When
-        CARD_TYPE cardType = creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
         assertEquals(CARD_TYPE.AMEX, cardType, "Card is of type AMEX");
     }
@@ -72,7 +72,7 @@ class CreditCardTypeTest {
         // Given
         String creditCardNumber = "6011123456789012";
         // When
-        CARD_TYPE cardType = creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
         assertEquals(CARD_TYPE.Discover, cardType, "Card is of type Discover");
     }
@@ -83,7 +83,7 @@ class CreditCardTypeTest {
         String creditCardNumber = "60111234567890";
         // Expect InvalidCardTypeException
         assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+            creditCardValidator.creditCardTypeCheck(creditCardNumber);
         });
     }
 
@@ -92,7 +92,7 @@ class CreditCardTypeTest {
         // Given
         String creditCardNumber = "5112345678901234";
         // When
-        CARD_TYPE cardType = creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
         assertEquals(CARD_TYPE.MasterCard, cardType, "Card is of type MasterCard");
     }
@@ -102,7 +102,7 @@ class CreditCardTypeTest {
         // Given
         String creditCardNumber = "5112345678901234";
         // When
-        CARD_TYPE cardType = creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
         assertEquals(CARD_TYPE.MasterCard, cardType, "Card is of type MasterCard");
     }
@@ -112,7 +112,7 @@ class CreditCardTypeTest {
         // Given
         String creditCardNumber = "5312345678901234";
         // When
-        CARD_TYPE cardType = creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
         assertEquals(CARD_TYPE.MasterCard, cardType, "Card is of type MasterCard");
     }
@@ -122,7 +122,7 @@ class CreditCardTypeTest {
         // Given
         String creditCardNumber = "5412345678901234";
         // When
-        CARD_TYPE cardType = creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
         assertEquals(CARD_TYPE.MasterCard, cardType, "Card is of type MasterCard");
     }
@@ -132,7 +132,7 @@ class CreditCardTypeTest {
         // Given
         String creditCardNumber = "5512345678901234";
         // When
-        CARD_TYPE cardType = creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
         assertEquals(CARD_TYPE.MasterCard, cardType, "Card is of type MasterCard");
     }
@@ -142,7 +142,7 @@ class CreditCardTypeTest {
         // Given
         String creditCardNumber = "4123456789012";
         // When
-        CARD_TYPE cardType = creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
         assertEquals(CARD_TYPE.Visa, cardType, "Card is of type Visa");
     }
@@ -152,7 +152,7 @@ class CreditCardTypeTest {
         // Given
         String creditCardNumber = "4123456789012345";
         // When
-        CARD_TYPE cardType = creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
         assertEquals(CARD_TYPE.Visa, cardType, "Card is of type Visa");
     }
@@ -163,7 +163,7 @@ class CreditCardTypeTest {
         String creditCardNumber = "412345678901234";
         // Expect InvalidCardTypeException
         assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.isCreditCardTypeValid(creditCardNumber);
+            creditCardValidator.creditCardTypeCheck(creditCardNumber);
         });
     }
 }
