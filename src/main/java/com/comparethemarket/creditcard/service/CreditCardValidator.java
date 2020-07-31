@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.IntStream;
+
 /**
  * The CreditCardValidator service will first check that the credit card is one which is from the valid range of cards
  * (i.e. AMEX, Discover, MasterCard or Visa). It will then check that the card's number is valid conforming to the
@@ -47,4 +49,13 @@ public class CreditCardValidator {
             throw new InvalidCardTypeException();
         }
     }
+
+    protected boolean isCardValid(String cardNumber) {
+
+        int[] numberArray = cardNumber.chars().map(c -> Character.digit(c, 10)).toArray();
+        return IntStream.range(0, numberArray.length)
+                .map(i -> (((i % 2) ^ (numberArray.length % 2)) == 0) ? ((2 * numberArray[i]) / 10 + (2 * numberArray[i]) % 10) : numberArray[i])
+                .sum() % 10 == 0;
+    }
+
 }

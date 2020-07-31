@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static com.comparethemarket.creditcard.service.CreditCardValidator.CARD_TYPE;
 
 
-class CreditCardValidatorTest {
+class CreditCardTypeTest {
 
     CreditCardValidator creditCardValidator;
 
@@ -138,7 +138,7 @@ class CreditCardValidatorTest {
     }
 
     @Test
-    public void masterCardPatternBeginsWith4Length13() {
+    public void visaCardPatternBeginsWith4Length13() {
         // Given
         String creditCardNumber = "4123456789012";
         // When
@@ -148,7 +148,7 @@ class CreditCardValidatorTest {
     }
 
     @Test
-    public void masterCardPatternBeginsWith4Length16() {
+    public void visaCardPatternBeginsWith4Length16() {
         // Given
         String creditCardNumber = "4123456789012345";
         // When
