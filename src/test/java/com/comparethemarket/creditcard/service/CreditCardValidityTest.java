@@ -1,16 +1,15 @@
 package com.comparethemarket.creditcard.service;
 
-import com.comparethemarket.creditcard.exception.InvalidCardTypeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CreditCardValidityTest {
+public class CreditCardValidityTest {
 
-    CreditCardValidator creditCardValidator;
+    private CreditCardValidator creditCardValidator;
 
     @BeforeEach
     public void setup() {
@@ -21,30 +20,33 @@ class CreditCardValidityTest {
     public void passedNullValue() {
         // Given
         String creditCardNumber = null;
-        // Expect InvalidCardTypeException
-        assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.checkCreditCardValidity(creditCardNumber);
-        });
+        // When
+        ResponseEntity responseEntity = creditCardValidator.checkCreditCardValidity(creditCardNumber);
+        // Then
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode(), "Card is invalid");
+        assertEquals("Unknown: null (invalid)", responseEntity.getBody(), "Card provides status body");
     }
 
     @Test
     public void completelyWrongCreditCard() {
         // Given
         String creditCardNumber = "123456789012345";
-        // Expect InvalidCardTypeException
-        assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.checkCreditCardValidity(creditCardNumber);
-        });
+        // When
+        ResponseEntity responseEntity = creditCardValidator.checkCreditCardValidity(creditCardNumber);
+        // Then
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode(), "Card is invalid");
+        assertEquals("Unknown: 123456789012345 (invalid)", responseEntity.getBody(), "Card provides status body");
     }
 
     @Test
     public void charactersDashesAndSpaces() {
         // Given
         String creditCardNumber = "xxxx123-456-78 90-1";
-        // Expect InvalidCardTypeException
-        assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.checkCreditCardValidity(creditCardNumber);
-        });
+        // When
+        ResponseEntity responseEntity = creditCardValidator.checkCreditCardValidity(creditCardNumber);
+        // Then
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode(), "Card is invalid");
+        assertEquals("Unknown: xxxx123-456-78 90-1 (invalid)", responseEntity.getBody(), "Card provides status body");
     }
 
     @Test
@@ -55,6 +57,7 @@ class CreditCardValidityTest {
         ResponseEntity responseEntity = creditCardValidator.checkCreditCardValidity(creditCardNumber);
         // Then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode(), "Card is a valid visa card");
+        assertEquals("VISA: 4111111111111111 (valid)", responseEntity.getBody(), "Card provides status body");
     }
 
     @Test
@@ -65,5 +68,6 @@ class CreditCardValidityTest {
         ResponseEntity responseEntity = creditCardValidator.checkCreditCardValidity(creditCardNumber);
         // Then
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode(), "Card is an invalid visa card");
+        assertEquals("VISA: 4111111211111111 (invalid)", responseEntity.getBody(), "Card provides status body");
     }
 }

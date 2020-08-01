@@ -1,0 +1,11 @@
+
+server:
+  port: 80
+
+logging:
+  level:
+    org.springframework: INFO
+    com.comparethemarket.creditcard: DEBUG
+
+credit-card:
+  api-version: /api/1.0

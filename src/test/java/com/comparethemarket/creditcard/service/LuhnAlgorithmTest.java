@@ -3,11 +3,12 @@ package com.comparethemarket.creditcard.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class LuhnAlgorithmTest {
+public class LuhnAlgorithmTest {
 
-    CreditCardValidator creditCardValidator;
+    private CreditCardValidator creditCardValidator;
 
     @BeforeEach
     public void setup() {
@@ -21,7 +22,7 @@ class LuhnAlgorithmTest {
         // When
         boolean isValid = creditCardValidator.isCardValid(creditCardNumber);
         // Then
-        assertEquals(true, isValid, "Card passes the Luhn Algorithm check");
+        assertTrue(isValid, "Card passes the Luhn Algorithm check");
     }
 
     @Test
@@ -31,7 +32,7 @@ class LuhnAlgorithmTest {
         // When
         boolean isValid = creditCardValidator.isCardValid(creditCardNumber);
         // Then
-        assertEquals(false, isValid, "Card fails the Luhn Algorithm check");
+        assertFalse(isValid, "Card fails the Luhn Algorithm check");
     }
 
     @Test
@@ -41,7 +42,7 @@ class LuhnAlgorithmTest {
         // When
         boolean isValid = creditCardValidator.isCardValid(creditCardNumber);
         // Then
-        assertEquals(true, isValid, "Card passes the Luhn Algorithm check");
+        assertTrue(isValid, "Card passes the Luhn Algorithm check");
     }
 
     @Test
@@ -51,7 +52,7 @@ class LuhnAlgorithmTest {
         // When
         boolean isValid = creditCardValidator.isCardValid(creditCardNumber);
         // Then
-        assertEquals(true, isValid, "Card passes the Luhn Algorithm check");
+        assertTrue(isValid, "Card passes the Luhn Algorithm check");
     }
 
     @Test
@@ -61,7 +62,7 @@ class LuhnAlgorithmTest {
         // When
         boolean isValid = creditCardValidator.isCardValid(creditCardNumber);
         // Then
-        assertEquals(true, isValid, "Card passes the Luhn Algorithm check");
+        assertTrue(isValid, "Card passes the Luhn Algorithm check");
     }
 
     @Test
@@ -71,7 +72,7 @@ class LuhnAlgorithmTest {
         // When
         boolean isValid = creditCardValidator.isCardValid(creditCardNumber);
         // Then
-        assertEquals(true, isValid, "Card passes the Luhn Algorithm check");
+        assertTrue(isValid, "Card passes the Luhn Algorithm check");
     }
 
     @Test
@@ -81,6 +82,6 @@ class LuhnAlgorithmTest {
         // When
         boolean isValid = creditCardValidator.isCardValid(creditCardNumber);
         // Then
-        assertEquals(false, isValid, "Card fails the Luhn Algorithm check");
+        assertFalse(isValid, "Card fails the Luhn Algorithm check");
     }
 }

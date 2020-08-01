@@ -12,15 +12,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(CardValidatorController.class)
-class CardValidatorControllerTest {
+public class CardValidatorControllerTest {
 
     @Autowired
     private MockMvc mvc;
@@ -32,58 +31,52 @@ class CardValidatorControllerTest {
     public void validCard() throws Exception {
         // Given
         String cardNumber = "4111111111111111";
-        ResponseEntity response = ResponseEntity.status(HttpStatus.OK).build();
+        String message = "VISA: 4111111111111111 (valid)";
+        ResponseEntity<String> response = new ResponseEntity<>(message, HttpStatus.OK);
         when(validator.checkCreditCardValidity(cardNumber)).thenReturn(response);
         // Then Expect
         mvc.perform(get("/api/1.0/card/validate/" + cardNumber)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().string(message));
     }
 
     @Test
     public void inValidCard() throws Exception {
         // Given
         String cardNumber = "4111111111111112";
-        ResponseEntity response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        String message = "VISA: 4111111111111112 (invalid)";
+        ResponseEntity<String> response = new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         when(validator.checkCreditCardValidity(cardNumber)).thenReturn(response);
         // Then Expect
         mvc.perform(get("/api/1.0/card/validate/" + cardNumber)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(message));
     }
 
     @Test
     public void nonsenseCard() throws Exception {
         // Given
         String cardNumber = "411sdfgsgsf";
-        ResponseEntity response = ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        String message = "Unknown: 411sdfgsgsf (invalid)";
+        ResponseEntity<String> response = new ResponseEntity<>(message, HttpStatus.UNPROCESSABLE_ENTITY);
         when(validator.checkCreditCardValidity(cardNumber)).thenReturn(response);
         // Then Expect
         mvc.perform(get("/api/1.0/card/validate/" + cardNumber)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnprocessableEntity());
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().string(message));
     }
 
     @Test
     public void missingCard() throws Exception {
         // Given
         String cardNumber = "";
-        ResponseEntity response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        ResponseEntity<String> response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
         when(validator.checkCreditCardValidity(cardNumber)).thenReturn(response);
         // Then Expect
         mvc.perform(get("/api/1.0/card/validate/" + cardNumber)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    public void incorrectEndPoint() throws Exception {
-        // Given
-        String cardNumber = "4111111111111111";
-        ResponseEntity response = ResponseEntity.status(HttpStatus.OK).build();
-        when(validator.checkCreditCardValidity(cardNumber)).thenReturn(response);
-        // Then Expect
-        mvc.perform(get("/api/1.0/card/valid/" + cardNumber)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

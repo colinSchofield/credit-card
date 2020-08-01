@@ -4,7 +4,10 @@ import com.comparethemarket.creditcard.service.CreditCardValidator;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("${credit-card.api-version}")
@@ -19,9 +22,9 @@ public class CardValidatorController {
     @ApiParam("cardNumber is validated, given a set number of supported card types.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "The Credit Card is valid."),
-            @ApiResponse(code = 400, message = "THE Credit Card is NOT valid."),
+            @ApiResponse(code = 400, message = "The Credit Card is invalid."),
             @ApiResponse(code = 422, message = "Either the Credit Card is nonsense, or it does not conform to the set of supported types.")})
-    public ResponseEntity updateUser(@PathVariable String cardNumber) {
+    public ResponseEntity<String> checkCreditCardValidity(@PathVariable String cardNumber) {
         return validator.checkCreditCardValidity(cardNumber);
     }
 }

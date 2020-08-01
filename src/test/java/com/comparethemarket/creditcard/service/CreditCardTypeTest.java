@@ -1,16 +1,15 @@
 package com.comparethemarket.creditcard.service;
 
-import com.comparethemarket.creditcard.exception.InvalidCardTypeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static com.comparethemarket.creditcard.service.CreditCardValidator.CARD_TYPE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-class CreditCardTypeTest {
+public class CreditCardTypeTest {
 
-    CreditCardValidator creditCardValidator;
+    private CreditCardValidator creditCardValidator;
 
     @BeforeEach
     public void setup() {
@@ -21,30 +20,30 @@ class CreditCardTypeTest {
     public void nullValuePassedForCreditCard() {
         // Given
         String creditCardNumber = null;
-        // Expect InvalidCardTypeException
-        assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.creditCardTypeCheck(creditCardNumber);
-        });
+        // When
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
+        // Then
+        assertEquals(CARD_TYPE.Unknown, cardType, "Card is unrecognised");
     }
 
     @Test
     public void longValuePassedForCreditCard() {
         // Given
         String creditCardNumber = "123456789012345678";
-        // Expect InvalidCardTypeException
-        assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.creditCardTypeCheck(creditCardNumber);
-        });
+        // When
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
+        // Then
+        assertEquals(CARD_TYPE.Unknown, cardType, "Card is unrecognised");
     }
 
     @Test
     public void shortValuePassedForCreditCard() {
         // Given
         String creditCardNumber = "1234";
-        // Expect InvalidCardTypeException
-        assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.creditCardTypeCheck(creditCardNumber);
-        });
+        // When
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
+        // Then
+        assertEquals(CARD_TYPE.Unknown, cardType, "Card is unrecognised");
     }
 
     @Test
@@ -81,10 +80,10 @@ class CreditCardTypeTest {
     public void discoverPatternButNumberTooShort() {
         // Given
         String creditCardNumber = "60111234567890";
-        // Expect InvalidCardTypeException
-        assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.creditCardTypeCheck(creditCardNumber);
-        });
+        // When
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
+        // Then
+        assertEquals(CARD_TYPE.Unknown, cardType, "Card is unrecognised");
     }
 
     @Test
@@ -144,7 +143,7 @@ class CreditCardTypeTest {
         // When
         CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
-        assertEquals(CARD_TYPE.Visa, cardType, "Card is of type Visa");
+        assertEquals(CARD_TYPE.VISA, cardType, "Card is of type Visa");
     }
 
     @Test
@@ -154,16 +153,16 @@ class CreditCardTypeTest {
         // When
         CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
         // Then
-        assertEquals(CARD_TYPE.Visa, cardType, "Card is of type Visa");
+        assertEquals(CARD_TYPE.VISA, cardType, "Card is of type Visa");
     }
 
     @Test
     public void visaPatternButNumberTooShort() {
         // Given
         String creditCardNumber = "412345678901234";
-        // Expect InvalidCardTypeException
-        assertThrows(InvalidCardTypeException.class, () -> {
-            creditCardValidator.creditCardTypeCheck(creditCardNumber);
-        });
+        // When
+        CARD_TYPE cardType = creditCardValidator.creditCardTypeCheck(creditCardNumber);
+        // Then
+        assertEquals(CARD_TYPE.Unknown, cardType, "Card is unrecognised (too short)");
     }
 }
