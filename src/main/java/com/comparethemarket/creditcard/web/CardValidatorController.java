@@ -18,7 +18,7 @@ public class CardValidatorController {
     private CreditCardValidator validator;
 
     @GetMapping("/card/validate/{cardNumber}")
-    @ApiOperation("No text is returned by this service, only the response code is provided.")
+    @ApiOperation("A plain text message is returned from this service, together with a response code indicating the validity of the card.")
     @ApiParam("cardNumber is validated, given a set number of supported card types.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "The Credit Card is valid."),
