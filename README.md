@@ -53,6 +53,7 @@ In a real world situation, I am sure that there would be a fair amount of backwa
 - The business logic for determining the type of credit card being used, could benefit from being composed in a separate service (and indeed a separate library). This service might also use a set of spring configuration elements, rather than relying upon hard coding.
 - There is nothing in the requirements, but it would be nice to return a JSON object containing the card type and valid/invalid message
 - No mention of security concerns, but it would be very easy to add basic authentication. This 'easy' solution, uncovers a lot of questions about who might manage these credentials, or indeed monitor their use, in production.
+- The Unit Tests are fine as they are, but it would be less code to use a [Junit 5 Parameterized Tests](https://www.baeldung.com/parameterized-tests-junit-5). I am not a big fan of the Java version of this, but I *do* like the [Groovy Spockito library](https://github.com/tools4j/spockito). Unfortunately, this library has not been updated to support JUnit 5 :-/. 
 
 #### Performance
 
